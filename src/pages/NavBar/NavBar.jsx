@@ -1,4 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
+
+const navItems = [
+  { name: "Home", to: "/" },
+  { name: "About", to: "/about" },
+  { name: "Projects", to: "/projects" },
+  { name: "Blog", to: "/blog" },
+  { name: "Skills", to: "/skills" },
+  { name: "Contact", to: "/contact" },
+];
 
 const NavBar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -8,12 +18,9 @@ const NavBar = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const navItems = ["Home", "About", "Projects", "Blog", "Skills", "Contact"];
 
   return (
     <nav
@@ -24,23 +31,38 @@ const NavBar = () => {
       <div className="max-w-[90%] mx-auto">
         <div className="flex items-center justify-between h-24">
           {/* Logo with creative design */}
-          <a href="/" className="group">
+          <NavLink to="/" className="group select-none">
             <span className="text-2xl font-light tracking-widest text-white">
               H<span className="font-bold">AYLEMESKEL</span>
             </span>
-          </a>
+          </NavLink>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-12">
+          <div className="hidden md:flex items-center space-x-10">
             {navItems.map((item) => (
-              <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                className="relative group text-gray-300 hover:text-white transition-colors duration-300 text-sm tracking-widest"
+              <NavLink
+                key={item.name}
+                to={item.to}
+                className={({ isActive }) =>
+                  `relative uppercase font-medium tracking-wider px-2 py-1 transition-colors duration-300 text-sm
+                  ${isActive ? "text-white" : "text-gray-300 hover:text-white"}`
+                }
               >
-                {item}
-                <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
-              </a>
+                {({ isActive }) => (
+                  <>
+                    {item.name}
+                    <span
+                      className={`block h-[2px] mt-1 rounded-full transition-all duration-300
+                        ${
+                          isActive
+                            ? "w-full bg-white/80"
+                            : "w-0 bg-transparent group-hover:w-full group-hover:bg-white/40"
+                        }
+                      `}
+                    ></span>
+                  </>
+                )}
+              </NavLink>
             ))}
           </div>
 
@@ -77,13 +99,21 @@ const NavBar = () => {
         >
           <div className="px-4 py-6 space-y-6">
             {navItems.map((item) => (
-              <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                className="block text-gray-300 hover:text-white transition-colors duration-300 text-sm tracking-widest"
+              <NavLink
+                key={item.name}
+                to={item.to}
+                className={({ isActive }) =>
+                  `block uppercase font-medium tracking-wider text-sm px-2 py-2 rounded transition-colors duration-300
+                  ${
+                    isActive
+                      ? "text-white bg-white/10"
+                      : "text-gray-300 hover:text-white hover:bg-white/5"
+                  }`
+                }
+                onClick={() => setIsMobileMenuOpen(false)}
               >
-                {item}
-              </a>
+                {item.name}
+              </NavLink>
             ))}
           </div>
         </div>

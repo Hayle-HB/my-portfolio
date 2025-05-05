@@ -74,14 +74,17 @@ const Home = () => {
                   href="#projects"
                   className="group relative px-8 py-4 border border-white/20 hover:border-white transition-all duration-300"
                 >
-                  <span className="relative z-10">View My Blog</span>
+                  <span className="relative z-10">
+                    {" "}
+                    <a href="/blog">Read My Blog</a>{" "}
+                  </span>
                   <span className="absolute inset-0 bg-white/5 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
                 </a>
               </div>
             </div>
             {/* Right Column - Image Carousel */}
             <div className="col-span-12 lg:col-span-6 flex items-center justify-center relative">
-              <div className="relative w-140 h-100  rounded-2xl overflow-hidden shadow-2xl border-2 border-white/10 bg-gray-900 flex items-center justify-center">
+              <div className="relative w-130 h-103  rounded-2xl overflow-hidden shadow-2xl border-2 border-white/10 bg-gray-900 flex items-center justify-center">
                 <AnimatePresence mode="wait">
                   <motion.img
                     key={current}
