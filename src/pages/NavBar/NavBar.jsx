@@ -99,9 +99,9 @@ const NavBar = () => {
         >
           <div className="px-4 py-6 space-y-6">
             {navItems.map((item) => (
-              <NavLink
+              <a
                 key={item.name}
-                to={item.to}
+                href={item.to}
                 className={({ isActive }) =>
                   `block uppercase font-medium tracking-wider text-sm px-2 py-2 rounded transition-colors duration-300
                   ${
@@ -113,7 +113,7 @@ const NavBar = () => {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {item.name}
-              </NavLink>
+              </a>
             ))}
           </div>
         </div>

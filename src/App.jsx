@@ -4,6 +4,7 @@ import NavBar from "./pages/NavBar/NavBar";
 import Home from "./pages/Home/Home";
 import Blog from "./pages/Blog/Blog";
 import FromLocalhostToProduction from "./pages/Blog/BlogDetail.jsx/from_localhost_to_production";
+import Salvation from "./pages/Blog/BlogDetail.jsx/Salivation";
 
 const ComingSoon = () => (
   <div className="min-h-screen flex flex-col items-center justify-center text-center bg-black text-white">
@@ -42,6 +43,7 @@ const App = () => {
             path="/blog/from_localhost_to_production"
             element={<FromLocalhostToProduction />}
           />
+          <Route path="/blog/salivation" element={<Salvation />} />
           {/* Add more blog detail routes as needed */}
           <Route path="*" element={<ComingSoon />} />
         </Routes>
