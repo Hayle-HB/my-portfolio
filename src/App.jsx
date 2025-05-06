@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NavBar from "./pages/NavBar/NavBar";
+import Footer from "./components/Footer/Footer";
 import Home from "./pages/Home/Home";
 import Blog from "./pages/Blog/Blog";
 import FromLocalhostToProduction from "./pages/Blog/BlogDetail.jsx/from_localhost_to_production";
 import Salvation from "./pages/Blog/BlogDetail.jsx/Salivation";
-
+import Gallery from "./pages/Gallery/Gallery";
+import Contact from './pages/Contact Me/ContactMe'
 const ComingSoon = () => (
   <div className="min-h-screen flex flex-col items-center justify-center text-center bg-black text-white">
     <h1 className="text-4xl font-bold mb-4">Coming Soon</h1>
@@ -36,17 +38,23 @@ const App = () => {
     >
       <BrowserRouter>
         <NavBar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route
-            path="/blog/from_localhost_to_production"
-            element={<FromLocalhostToProduction />}
-          />
-          <Route path="/blog/salivation" element={<Salvation />} />
-          {/* Add more blog detail routes as needed */}
-          <Route path="*" element={<ComingSoon />} />
-        </Routes>
+        <main className="min-h-screen">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route
+              path="/blog/from_localhost_to_production"
+              element={<FromLocalhostToProduction />}
+            />
+            <Route path="/blog/salivation" element={<Salvation />} />
+            <Route path="/gallery" element = {<Gallery/>}/>
+            <Route path="/contact-me" element = {<Contact/>} />
+            {/* Add more blog detail routes as needed */}
+            
+            <Route path="*" element={<ComingSoon />} />
+          </Routes>
+        </main>
+        <Footer />
         {/* Light/Dark Toggle Button */}
         <button
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}

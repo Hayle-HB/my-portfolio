@@ -7,7 +7,8 @@ const navItems = [
   { name: "Projects", to: "/projects" },
   { name: "Blog", to: "/blog" },
   { name: "Skills", to: "/skills" },
-  { name: "Contact", to: "/contact" },
+  { name: "Contact", to: "/contact-me" },
+  {name: "Gallery", to: '/gallery'}
 ];
 
 const NavBar = () => {
@@ -97,13 +98,13 @@ const NavBar = () => {
             isMobileMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
           } overflow-hidden bg-black/95 backdrop-blur-md`}
         >
-          <div className="px-4 py-6 space-y-6">
+          <div className="px-4 py-6 space-y-4">
             {navItems.map((item) => (
-              <a
+              <NavLink
                 key={item.name}
-                href={item.to}
+                to={item.to}
                 className={({ isActive }) =>
-                  `block uppercase font-medium tracking-wider text-sm px-2 py-2 rounded transition-colors duration-300
+                  `block uppercase font-medium tracking-wider text-sm px-4 py-3 rounded transition-colors duration-300
                   ${
                     isActive
                       ? "text-white bg-white/10"
@@ -113,7 +114,7 @@ const NavBar = () => {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {item.name}
-              </a>
+              </NavLink>
             ))}
           </div>
         </div>
