@@ -8,6 +8,7 @@ import FromLocalhostToProduction from "./pages/Blog/BlogDetail.jsx/from_localhos
 import Salvation from "./pages/Blog/BlogDetail.jsx/Salivation";
 import Gallery from "./pages/Gallery/Gallery";
 import Contact from './pages/Contact Me/ContactMe'
+import How_TO_USE_GIT from "./pages/Blog/BlogDetail.jsx/How_TO_USE_GIT";
 const ComingSoon = () => (
   <div className="min-h-screen flex flex-col items-center justify-center text-center bg-black text-white">
     <h1 className="text-4xl font-bold mb-4">Coming Soon</h1>
@@ -45,6 +46,10 @@ const App = () => {
             <Route
               path="/blog/from_localhost_to_production"
               element={<FromLocalhostToProduction />}
+            />
+            <Route
+              path="/blog/how_to_use_git"
+              element={<How_TO_USE_GIT />}
             />
             <Route path="/blog/salivation" element={<Salvation />} />
             <Route path="/gallery" element = {<Gallery/>}/>
