@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NavBar from "./pages/NavBar/NavBar";
 import Footer from "./components/Footer/Footer";
 import Home from "./pages/Home/Home";
+import About from "./pages/About/About";
+import Projects from "./pages/Projects/Projects";
+import ProjectDetail from "./pages/Projects/ProjectDetail";
 import Blog from "./pages/Blog/Blog";
 import FromLocalhostToProduction from "./pages/Blog/BlogDetail.jsx/from_localhost_to_production";
 import Salvation from "./pages/Blog/BlogDetail.jsx/Salivation";
 import Gallery from "./pages/Gallery/Gallery";
-import Contact from './pages/Contact Me/ContactMe'
+import Contact from "./pages/Contact Me/ContactMe";
 import How_TO_USE_GIT from "./pages/Blog/BlogDetail.jsx/How_TO_USE_GIT";
 const ComingSoon = () => (
   <div className="min-h-screen flex flex-col items-center justify-center text-center bg-black text-white">
@@ -42,20 +45,20 @@ const App = () => {
         <main className="min-h-screen">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/projects/:projectId" element={<ProjectDetail />} />
             <Route path="/blog" element={<Blog />} />
             <Route
               path="/blog/from_localhost_to_production"
               element={<FromLocalhostToProduction />}
             />
-            <Route
-              path="/blog/how_to_use_git"
-              element={<How_TO_USE_GIT />}
-            />
+            <Route path="/blog/how_to_use_git" element={<How_TO_USE_GIT />} />
             <Route path="/blog/salivation" element={<Salvation />} />
-            <Route path="/gallery" element = {<Gallery/>}/>
-            <Route path="/contact-me" element = {<Contact/>} />
+            <Route path="/gallery" element={<Gallery />} />
+            <Route path="/contact-me" element={<Contact />} />
             {/* Add more blog detail routes as needed */}
-            
+
             <Route path="*" element={<ComingSoon />} />
           </Routes>
         </main>
