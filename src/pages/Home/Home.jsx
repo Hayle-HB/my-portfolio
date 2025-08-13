@@ -24,6 +24,7 @@ import {
   SiJest,
   SiWebpack,
 } from "react-icons/si";
+import { Link } from "react-router-dom";
 
 const images = [Haylemeskel1, Haylemeskel2];
 
@@ -80,26 +81,26 @@ const Home = () => {
                 </p>
               </div>
               <div className="flex flex-wrap gap-6">
-                <a
-                  href="/projects"
+                <Link
+                  to="/projects"
                   className="group relative px-8 py-4 border border-white/20 hover:border-white transition-all duration-300"
                 >
                   <span className="relative z-10">View My Work</span>
                   <span className="absolute inset-0 bg-white/5 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
-                </a>
-                <a
-                  href="/contact-me"
+                </Link>
+                <Link
+                  to="/contact-me"
                   className="px-8 py-4 bg-white text-black hover:bg-gray-200 transition-colors duration-300"
                 >
                   Contact Me
-                </a>
-                <a
-                  href="/blog"
+                </Link>
+                <Link
+                  to="/blog"
                   className="group relative px-8 py-4 border border-white/20 hover:border-white transition-all duration-300"
                 >
                   <span className="relative z-10">Read My Blog</span>
                   <span className="absolute inset-0 bg-white/5 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
-                </a>
+                </Link>
               </div>
             </div>
             {/* Right Column - Image Carousel */}
