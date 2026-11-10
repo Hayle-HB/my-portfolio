@@ -35,18 +35,18 @@ const Footer = () => {
             <p className="mt-2 text-muted">
               {profile.title}, {profile.location}
             </p>
-            <a href={`mailto:${profile.email}`} className="mt-4 inline-block font-semibold text-signal link-underline">
+            <a href={`mailto:${profile.email}`} className="mt-2 inline-block py-2.5 font-semibold text-signal link-underline">
               {profile.email}
             </a>
           </div>
           {columns.map((col) => (
             <nav key={col.title} aria-label={col.title} className="md:col-span-3">
               <h2 className="text-[0.9375rem] font-semibold">{col.title}</h2>
-              <ul className="mt-3 space-y-2 text-[0.9375rem]">
+              <ul className="mt-2 text-[0.9375rem]">
                 {col.links.map((l) => (
                   <li key={l.label}>
                     {l.to ? (
-                      <Link to={l.to} className="text-muted transition-colors hover:text-ink">
+                      <Link to={l.to} className="inline-block py-2.5 text-muted transition-colors hover:text-ink">
                         {l.label}
                       </Link>
                     ) : (
@@ -54,7 +54,7 @@ const Footer = () => {
                         href={l.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-muted transition-colors hover:text-ink"
+                        className="inline-block py-2.5 text-muted transition-colors hover:text-ink"
                       >
                         {l.label}
                       </a>

@@ -15,7 +15,7 @@ const ProjectDetail = () => {
           <p className="mt-4 max-w-[52ch] text-muted">
             There&apos;s no project at this address. The full list is on the projects page.
           </p>
-          <Link to="/projects" className="mt-8 inline-block font-semibold text-signal link-underline">
+          <Link to="/projects" className="tap mt-8 inline-block font-semibold text-signal link-underline">
             See all projects
           </Link>
         </Container>
@@ -31,7 +31,7 @@ const ProjectDetail = () => {
       <Container>
         <Link
           to="/projects"
-          className="inline-flex items-center gap-2 text-[0.9375rem] text-muted transition-colors hover:text-ink"
+          className="-my-2 inline-flex min-h-11 items-center gap-2 text-[0.9375rem] text-muted transition-colors hover:text-ink"
         >
           <FiArrowLeft aria-hidden="true" />
           All projects
@@ -110,7 +110,7 @@ const ProjectDetail = () => {
           <p className="text-[0.9375rem] text-muted">Next project</p>
           <Link
             to={`/projects/${next.id}`}
-            className="wide mt-1 inline-block text-[1.625rem] font-bold tracking-[-0.01em] link-underline sm:text-[2.0625rem]"
+            className="tap wide mt-1 inline-block text-[1.625rem] font-bold tracking-[-0.01em] link-underline sm:text-[2.0625rem]"
           >
             {next.title}
           </Link>

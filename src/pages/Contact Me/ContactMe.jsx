@@ -94,7 +94,7 @@ const ContactMe = () => {
               {[
                 [
                   "Email",
-                  <a key="e" href={`mailto:${profile.email}`} className="break-all font-semibold text-signal link-underline">
+                  <a key="e" href={`mailto:${profile.email}`} className="tap break-all font-semibold text-signal link-underline">
                     {profile.email}
                   </a>,
                 ],
@@ -107,14 +107,14 @@ const ContactMe = () => {
               ))}
             </dl>
 
-            <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-[0.9375rem] font-semibold">
-              <a href={profile.resumeUrl} download className="inline-flex items-center gap-2 link-underline">
+            <div className="mt-6 flex flex-wrap gap-x-6 text-[0.9375rem] font-semibold">
+              <a href={profile.resumeUrl} download className="inline-flex min-h-11 items-center gap-2 link-underline">
                 <FiDownload aria-hidden="true" /> Download résumé
               </a>
-              <a href={profile.links.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 link-underline">
+              <a href={profile.links.github} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 link-underline">
                 <FiGithub aria-hidden="true" /> GitHub
               </a>
-              <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 link-underline">
+              <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 link-underline">
                 <FiLinkedin aria-hidden="true" /> LinkedIn
               </a>
             </div>

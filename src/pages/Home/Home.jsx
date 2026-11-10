@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { FiArrowUpRight, FiCheck, FiDownload, FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
 import portrait from "../../assets/Images/Haylemesel_P1.jpg";
+import avatar from "../../assets/Images/avatar.jpg";
 import workshop from "../../assets/Images/Haylemeskel_Photo_1_Hardwares.jpg";
 import { profile, experience, skills, education, awards, aiWork, listText } from "../../data/profile";
 import { projects } from "../../data/projects";
@@ -8,60 +9,68 @@ import { Container, RailSection, RichText, Tag, ButtonLink } from "../../compone
 import TaskAnatomy from "../../components/TaskAnatomy";
 
 const Hero = () => (
-  <section className="pt-28 pb-20 sm:pt-36 sm:pb-28">
+  <section className="pt-24 pb-16 sm:pt-32 md:pb-24 lg:pt-36 lg:pb-28">
     <Container>
-      <div className="grid items-end gap-12 lg:grid-cols-12">
-        <div className="lg:col-span-7">
-          <h1 className="wide text-[clamp(2.5rem,12.5vw,5rem)] lg:text-[clamp(3.5rem,6.4vw,5.75rem)] font-extrabold leading-[0.95] tracking-[-0.03em]">
-            <span className="hero-line">
-              <span>{profile.firstName}</span>
-            </span>
-            <span className="hero-line">
-              <span>{profile.lastName}</span>
-            </span>
-          </h1>
+      <div className="grid gap-x-10 md:grid-cols-12 lg:gap-x-12">
+        {/* Phones: a small portrait above the name keeps a face on the first screen. */}
+        <img
+          src={avatar}
+          alt={`Portrait of ${profile.name}`}
+          width="240"
+          height="240"
+          className="hero-settle mb-6 h-16 w-16 rounded-full object-cover md:hidden"
+        />
 
-          <div className="hero-settle">
-            <p className="mt-7 text-[1.3125rem] font-semibold sm:text-[1.625rem]">{profile.title}</p>
-            <p className="mt-4 max-w-[56ch] text-[1.0625rem] text-muted sm:text-[1.1875rem]">
-              {profile.intro}
-            </p>
+        <h1 className="wide text-[clamp(2.5rem,12.5vw,5rem)] font-extrabold leading-[0.95] tracking-[-0.03em] md:col-span-12 lg:col-span-7 lg:row-start-1 lg:text-[clamp(3.5rem,6.4vw,5.75rem)]">
+          <span className="hero-line">
+            <span>{profile.firstName}</span>
+          </span>
+          <span className="hero-line">
+            <span>{profile.lastName}</span>
+          </span>
+        </h1>
 
-            <div className="mt-8 flex flex-wrap gap-3">
-              <ButtonLink href={profile.resumeUrl} download>
-                <FiDownload aria-hidden="true" />
-                Download résumé
-              </ButtonLink>
-              <ButtonLink href={`mailto:${profile.email}`} variant="secondary">
-                <FiMail aria-hidden="true" />
-                Email me
-              </ButtonLink>
-            </div>
+        <div className="hero-settle md:col-span-7 md:row-start-2">
+          <p className="mt-6 text-[1.3125rem] font-semibold sm:mt-7 sm:text-[1.625rem]">{profile.title}</p>
+          <p className="mt-4 max-w-[56ch] text-[1.0625rem] text-muted sm:text-[1.1875rem]">
+            {profile.intro}
+          </p>
 
-            <dl className="mt-10 max-w-xl border-b border-rule text-[0.9375rem]">
-              {[
-                ["Based in", profile.location],
-                ["Experience", "5+ years in backend, distributed and AI systems"],
-                [
-                  "Now",
-                  <>
-                    LLM training and evaluation,{" "}
-                    <a href="#ai-work" className="link-underline">
-                      Terminal-Bench tasks
-                    </a>
-                  </>,
-                ],
-              ].map(([term, value]) => (
-                <div key={term} className="grid grid-cols-[6.5rem_1fr] gap-4 border-t border-rule py-3">
-                  <dt className="text-muted">{term}</dt>
-                  <dd>{value}</dd>
-                </div>
-              ))}
-            </dl>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <ButtonLink href={profile.resumeUrl} download>
+              <FiDownload aria-hidden="true" />
+              Download résumé
+            </ButtonLink>
+            <ButtonLink href={`mailto:${profile.email}`} variant="secondary">
+              <FiMail aria-hidden="true" />
+              Email me
+            </ButtonLink>
           </div>
+
+          <dl className="mt-10 max-w-xl border-b border-rule text-[0.9375rem]">
+            {[
+              ["Based in", profile.location],
+              ["Experience", "5+ years in backend, distributed and AI systems"],
+              [
+                "Now",
+                <>
+                  LLM training and evaluation,{" "}
+                  <a href="#ai-work" className="link-underline">
+                    Terminal-Bench tasks
+                  </a>
+                </>,
+              ],
+            ].map(([term, value]) => (
+              <div key={term} className="grid grid-cols-[6.5rem_1fr] gap-4 border-t border-rule py-3">
+                <dt className="text-muted">{term}</dt>
+                <dd>{value}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
 
-        <figure className="hero-settle lg:col-span-5">
+        {/* Tablets: beside the intro. Laptops: spans the full hero height. */}
+        <figure className="hero-settle hidden md:col-span-5 md:col-start-8 md:row-start-2 md:mt-7 md:block lg:row-span-2 lg:row-start-1 lg:mt-0 lg:self-end">
           <img
             src={portrait}
             alt={`Portrait of ${profile.name}`}
@@ -186,7 +195,7 @@ const SelectedProjects = () => {
       lead="Client and personal work, from booking platforms to IoT dashboards."
       className="bg-mist"
       aside={
-        <Link to="/projects" className="mt-6 inline-block font-semibold text-signal link-underline">
+        <Link to="/projects" className="tap mt-6 inline-block font-semibold text-signal link-underline">
           All {projects.length} projects
         </Link>
       }
@@ -196,7 +205,7 @@ const SelectedProjects = () => {
           <li key={p.id} className="border-t border-rule py-8 first:border-t-0 first:pt-0">
             <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
               <h3 className="text-[1.3125rem] font-semibold">
-                <Link to={`/projects/${p.id}`} className="link-underline">
+                <Link to={`/projects/${p.id}`} className="tap link-underline">
                   {p.title}
                 </Link>
               </h3>
@@ -212,7 +221,7 @@ const SelectedProjects = () => {
                   href={p.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-[0.9375rem] font-semibold text-signal link-underline"
+                  className="tap inline-flex items-center gap-1 text-[0.9375rem] font-semibold text-signal link-underline"
                 >
                   Visit site
                   <FiArrowUpRight aria-hidden="true" />
@@ -303,7 +312,7 @@ const ContactCta = () => (
         <p className="mt-5 max-w-[52ch] text-[1.125rem] text-muted">{profile.availability}</p>
         <a
           href={`mailto:${profile.email}`}
-          className="wide mt-8 inline-block break-all text-[1.3125rem] font-semibold text-signal link-underline sm:text-[2.0625rem]"
+          className="wide mt-8 inline-block break-all py-1.5 text-[1.3125rem] font-semibold text-signal link-underline sm:text-[2.0625rem]"
         >
           {profile.email}
         </a>

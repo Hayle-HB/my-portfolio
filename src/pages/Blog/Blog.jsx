@@ -133,7 +133,7 @@ const Blog = () => {
                 <time dateTime={post.date}>{formatDate(post.date)}</time>
               </p>
               <h2 className="mt-2 text-[1.625rem] font-semibold leading-tight tracking-[-0.01em]">
-                <Link to={`/blog/${post.slug.toLowerCase()}`} className="link-underline">
+                <Link to={`/blog/${post.slug.toLowerCase()}`} className="tap link-underline">
                   {post.title}
                 </Link>
               </h2>

@@ -108,6 +108,17 @@
     font-stretch: 112%;
   }
 
+  /* Enlarges the touch area of small text links without moving the layout. */
+  .tap {
+    position: relative;
+  }
+
+  .tap::after {
+    content: "";
+    position: absolute;
+    inset: -0.625rem -0.375rem;
+  }
+
   .link-underline {
     text-decoration-line: underline;
     text-decoration-thickness: 1px;
@@ -237,4 +248,15 @@
 
 .legacy-article :is(.hover\:bg-blue-600, .hover\:bg-blue-700):hover {
   background-color: var(--color-signal-dark);
+}
+
+/* Larger tags and copy buttons in legacy articles, for touch screens. */
+.legacy-article .text-xs {
+  font-size: 0.8125rem;
+}
+
+.legacy-article pre + button,
+.legacy-article .relative > button.absolute {
+  min-height: 2.75rem;
+  min-width: 3.75rem;
 }

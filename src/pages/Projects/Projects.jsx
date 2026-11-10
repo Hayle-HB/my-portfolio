@@ -39,7 +39,7 @@ const Projects = () => {
                 type="button"
                 aria-pressed={on}
                 onClick={() => setActive(f.id)}
-                className={`rounded-full border px-4 py-1.5 text-[0.9375rem] transition-colors ${
+                className={`min-h-11 rounded-full border px-4 text-[0.9375rem] transition-colors ${
                   on
                     ? "border-ink bg-ink text-paper"
                     : "border-rule bg-white text-muted hover:border-ink/40 hover:text-ink"
@@ -56,7 +56,7 @@ const Projects = () => {
             <li key={p.id} className="grid gap-4 border-t border-rule py-8 md:grid-cols-12 md:gap-8">
               <div className="md:col-span-4">
                 <h2 className="text-[1.3125rem] font-semibold">
-                  <Link to={`/projects/${p.id}`} className="link-underline">
+                  <Link to={`/projects/${p.id}`} className="tap link-underline">
                     {p.title}
                   </Link>
                 </h2>
@@ -70,8 +70,8 @@ const Projects = () => {
                   {p.role}. {p.technologies.slice(0, 5).join(", ")}
                 </p>
               </div>
-              <div className="flex gap-5 text-[0.9375rem] font-semibold md:col-span-2 md:flex-col md:items-end md:gap-2">
-                <Link to={`/projects/${p.id}`} className="text-ink link-underline">
+              <div className="flex gap-6 text-[0.9375rem] font-semibold md:col-span-2 md:flex-col md:items-end md:gap-4">
+                <Link to={`/projects/${p.id}`} className="tap text-ink link-underline">
                   Details
                 </Link>
                 {p.liveUrl && (
@@ -79,7 +79,7 @@ const Projects = () => {
                     href={p.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-signal link-underline"
+                    className="tap inline-flex items-center gap-1 text-signal link-underline"
                   >
                     Visit site
                     <FiArrowUpRight aria-hidden="true" />

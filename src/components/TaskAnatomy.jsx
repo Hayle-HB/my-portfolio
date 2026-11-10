@@ -40,7 +40,7 @@ const TaskAnatomy = () => {
             aria-label="Files in the task"
             aria-orientation="vertical"
             onKeyDown={onKeyDown}
-            className="flex gap-1 overflow-x-auto md:flex-col md:overflow-visible"
+            className="flex flex-col gap-1"
           >
             {files.map((f, i) => {
               const selected = i === active;
@@ -54,14 +54,14 @@ const TaskAnatomy = () => {
                   aria-controls="task-panel"
                   tabIndex={selected ? 0 : -1}
                   onClick={() => setActive(i)}
-                  className={`flex shrink-0 items-center gap-2 rounded-md px-2 py-2 text-left font-mono text-[0.8125rem] transition-colors md:pl-5 ${
+                  className={`flex min-h-11 shrink-0 items-center gap-2 rounded-md px-3 text-left font-mono text-[0.8125rem] transition-colors md:pl-5 ${
                     selected
                       ? "bg-night text-night-text shadow-[inset_2px_0_0_var(--color-night-signal)]"
                       : "text-night-muted hover:bg-night/60 hover:text-night-text"
                   }`}
                 >
                   <FiFileText aria-hidden="true" className="shrink-0" />
-                  <span className="whitespace-nowrap">{f.path}</span>
+                  <span className="break-all md:whitespace-nowrap md:break-normal">{f.path}</span>
                 </button>
               );
             })}
@@ -79,7 +79,7 @@ const TaskAnatomy = () => {
           <p className="mt-2 max-w-[60ch] text-night-muted">{file.explain}</p>
           <pre
             key={file.path}
-            className="mt-5 overflow-x-auto rounded-lg border border-night-line bg-night p-4 font-mono text-[0.8125rem] leading-[1.7] text-night-text sm:text-[0.875rem]"
+            className="mt-5 overflow-x-auto whitespace-pre-wrap break-words rounded-lg border border-night-line bg-night p-4 font-mono text-[0.8125rem] leading-[1.7] text-night-text sm:whitespace-pre sm:text-[0.875rem]"
           >
             <code>{file.code}</code>
           </pre>
