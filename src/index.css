@@ -1,19 +1,262 @@
 @import "tailwindcss";
 
-/* Custom scroll animation for technologies */
-@keyframes scroll {
-  0% {
-    transform: translateX(0);
+/* ------------------------------------------------------------------
+   Design tokens
+   Paper and ink: cool white with deep navy text.
+   Signal: viridian, used for links and "pass" states.
+   Mark: highlighter yellow, used only to mark résumé metrics.
+   Night: the dark band for the AI training and evaluation section.
+------------------------------------------------------------------- */
+@theme {
+  --font-sans: "Archivo Variable", "Archivo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --color-paper: #fafbfc;
+  --color-mist: #eef2f6;
+  --color-ink: #0d1b2a;
+  --color-muted: #4a5568;
+  --color-rule: #d5dce4;
+  --color-signal: #0a7c66;
+  --color-signal-dark: #075e4d;
+  --color-mark: #ffe066;
+
+  --color-night: #0d1b2a;
+  --color-night-raised: #132840;
+  --color-night-line: #24405e;
+  --color-night-text: #e6ecf2;
+  --color-night-muted: #9aaabb;
+  --color-night-signal: #3cc9a7;
+
+  --text-display: clamp(3.25rem, 8.6vw, 7.75rem);
+  --text-display--line-height: 0.92;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
   }
-  100% {
-    transform: translateX(-100%);
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    font-feature-settings: "kern", "liga";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-mark);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .on-night :focus-visible {
+    outline-color: var(--color-night-signal);
+  }
+
+  /* Anchored sections clear the sticky header. */
+  [id] {
+    scroll-margin-top: 5rem;
   }
 }
 
-.animate-scroll {
-  animation: scroll 40s linear infinite;
+@layer components {
+  /* Highlighted résumé metric, drawn like a reviewer's marker stroke. */
+  .metric {
+    background: linear-gradient(
+      to top,
+      color-mix(in srgb, var(--color-mark) 70%, transparent) 0 38%,
+      transparent 38%
+    );
+    color: inherit;
+    font-weight: 600;
+    padding: 0 0.08em;
+    margin: 0 -0.04em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  .on-night .metric {
+    background: linear-gradient(
+      to top,
+      color-mix(in srgb, var(--color-mark) 30%, transparent) 0 48%,
+      transparent 48%
+    );
+  }
+
+  .wide {
+    font-stretch: 112%;
+  }
+
+  /* Enlarges the touch area of small text links without moving the layout. */
+  .tap {
+    position: relative;
+  }
+
+  .tap::after {
+    content: "";
+    position: absolute;
+    inset: -0.625rem -0.375rem;
+  }
+
+  .link-underline {
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.22em;
+    text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+    transition: text-decoration-color 150ms ease;
+  }
+
+  .link-underline:hover {
+    text-decoration-color: currentColor;
+  }
 }
 
-.animate-scroll:hover {
-  animation-play-state: paused;
+/* One orchestrated entrance: the hero name rises line by line. */
+@keyframes rise {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes settle {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.hero-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.06em;
+}
+
+.hero-line > span {
+  display: block;
+  animation: rise 900ms cubic-bezier(0.2, 0.7, 0.1, 1) both;
+}
+
+.hero-line:nth-child(2) > span {
+  animation-delay: 110ms;
+}
+
+.hero-settle {
+  animation: settle 700ms 380ms cubic-bezier(0.2, 0.7, 0.1, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 1ms !important;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Legacy blog articles were written for a dark theme. This layer maps
+   their dark utility classes onto the light reading surface while
+   leaving code blocks dark.
+------------------------------------------------------------------- */
+.legacy-article {
+  --code-bg: #0f1d2c;
+}
+
+.legacy-article :is(.bg-black, .bg-\[\#13151a\], .bg-\[\#181a20\], .bg-gray-950) {
+  background-color: var(--color-paper);
+}
+
+.legacy-article
+  :is(.bg-gray-800\/30, .bg-gray-800\/50, .bg-blue-900\/20, .bg-blue-900\/40, .bg-white\/5, .bg-white\/10):not(
+    :is(pre, .bg-gray-900, .bg-\[\#1E1E1E\], .bg-\[\#1a1a1a\]) *
+  ) {
+  background-color: var(--color-mist);
+}
+
+.legacy-article
+  :is(.text-white, .text-gray-100, .text-gray-200):not(
+    :is(pre, .bg-gray-900, .bg-gray-800, .bg-\[\#1E1E1E\], .bg-\[\#1a1a1a\], .bg-blue-500, .bg-blue-600) *
+  ):not(:is(.bg-gray-900, .bg-gray-800, .bg-\[\#1E1E1E\], .bg-\[\#1a1a1a\], .bg-blue-500, .bg-blue-600)) {
+  color: var(--color-ink);
+}
+
+.legacy-article
+  :is(.text-gray-300, .text-gray-400, .text-gray-500):not(
+    :is(pre, .bg-gray-900, .bg-gray-800, .bg-\[\#1E1E1E\], .bg-\[\#1a1a1a\]) *
+  ) {
+  color: var(--color-muted);
+}
+
+.legacy-article
+  :is(.text-blue-200, .text-blue-300, .text-blue-400, .text-emerald-400):not(
+    :is(pre, .bg-gray-900, .bg-gray-800, .bg-\[\#1E1E1E\], .bg-\[\#1a1a1a\]) *
+  ) {
+  color: var(--color-signal-dark);
+}
+
+.legacy-article :is(.border-gray-700, .border-gray-800, .border-white\/10, .border-blue-400\/10, .border-blue-200\/20) {
+  border-color: var(--color-rule);
+}
+
+.legacy-article :is(.border-blue-500, .border-emerald-500) {
+  border-color: var(--color-signal);
+}
+
+.legacy-article :is(.bg-gray-900, .bg-gray-800, .bg-\[\#1E1E1E\], .bg-\[\#1a1a1a\]) {
+  background-color: var(--code-bg);
+}
+
+.legacy-article .prose-invert {
+  color: var(--color-ink);
+}
+
+.legacy-article :is(.bg-blue-500, .bg-blue-600) {
+  background-color: var(--color-signal);
+}
+
+.legacy-article :is(.hover\:bg-blue-600, .hover\:bg-blue-700):hover {
+  background-color: var(--color-signal-dark);
+}
+
+/* Larger tags and copy buttons in legacy articles, for touch screens. */
+.legacy-article .text-xs {
+  font-size: 0.8125rem;
+}
+
+.legacy-article pre + button,
+.legacy-article .relative > button.absolute {
+  min-height: 2.75rem;
+  min-width: 3.75rem;
 }

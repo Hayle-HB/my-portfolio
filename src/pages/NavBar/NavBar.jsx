@@ -1,124 +1,117 @@
-import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { FiDownload, FiMenu, FiX } from "react-icons/fi";
+import { profile } from "../../data/profile";
 
 const navItems = [
-  { name: "Home", to: "/" },
-  { name: "About", to: "/about" },
-  { name: "Projects", to: "/projects" },
-  { name: "Blog", to: "/blog" },
-  { name: "Gallery", to: "/gallery" },
-  { name: "Contact", to: "/contact-me" },
+  { name: "AI work", to: "/#ai-work", match: (p, h) => p === "/" && h === "#ai-work" },
+  { name: "Experience", to: "/#experience", match: (p, h) => p === "/" && h === "#experience" },
+  { name: "Projects", to: "/projects", match: (p) => p.startsWith("/projects") },
+  { name: "Writing", to: "/blog", match: (p) => p.startsWith("/blog") },
+  { name: "Contact", to: "/contact-me", match: (p) => p === "/contact-me" },
 ];
 
 const NavBar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+  const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => setOpen(false), [pathname, hash]);
+
+  useEffect(() => {
+    if (!open) return undefined;
+    const onKey = (e) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
   return (
-    <nav
-      className={`fixed w-full z-50 transition-all duration-500 ${
-        isScrolled ? "bg-black/95 backdrop-blur-md" : "bg-transparent"
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color] duration-200 ${
+        scrolled || open
+          ? "border-b border-rule bg-paper/90 backdrop-blur-md"
+          : "border-b border-transparent bg-paper/0"
       }`}
     >
-      <div className="max-w-[90%] mx-auto">
-        <div className="flex items-center justify-between h-24">
-          {/* Logo with creative design */}
-          <NavLink to="/" className="group select-none">
-            <span className="text-2xl font-light tracking-widest text-white">
-              H<span className="font-bold">AYLEMESKEL</span>
-            </span>
-          </NavLink>
+      <div className="mx-auto flex h-16 w-full max-w-[1120px] items-center justify-between px-5 sm:px-8">
+        <Link to="/" className="whitespace-nowrap py-2.5 text-[0.9375rem] font-bold" aria-label="Home">
+          {profile.firstName} <span className="font-normal">{profile.lastName}</span>
+        </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-10">
-            {navItems.map((item) => (
-              <NavLink
-                key={item.name}
-                to={item.to}
-                className={({ isActive }) =>
-                  `relative uppercase font-medium tracking-wider px-2 py-1 transition-colors duration-300 text-sm
-                  ${isActive ? "text-white" : "text-gray-300 hover:text-white"}`
-                }
-              >
-                {({ isActive }) => (
-                  <>
+        <nav aria-label="Main" className="hidden items-center gap-8 lg:flex">
+          <ul className="flex items-center gap-7">
+            {navItems.map((item) => {
+              const active = item.match(pathname, hash);
+              return (
+                <li key={item.name}>
+                  <Link
+                    to={item.to}
+                    aria-current={active ? "page" : undefined}
+                    className={`tap whitespace-nowrap text-[0.875rem] transition-colors ${
+                      active ? "font-semibold text-ink" : "text-muted hover:text-ink"
+                    }`}
+                  >
                     {item.name}
-                    <span
-                      className={`block h-[2px] mt-1 rounded-full transition-all duration-300
-                        ${
-                          isActive
-                            ? "w-full bg-white/80"
-                            : "w-0 bg-transparent group-hover:w-full group-hover:bg-white/40"
-                        }
-                      `}
-                    ></span>
-                  </>
-                )}
-              </NavLink>
-            ))}
-          </div>
-
-          {/* Mobile menu button */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden relative w-8 h-8 focus:outline-none"
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+          <a
+            href={profile.resumeUrl}
+            download
+            className="inline-flex min-h-11 items-center gap-2 rounded-md bg-ink px-3.5 text-[0.8125rem] font-semibold text-paper transition-colors hover:bg-signal-dark"
           >
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span
-                className={`absolute h-[1px] w-6 bg-white transform transition-all duration-300 ${
-                  isMobileMenuOpen ? "rotate-45" : "-translate-y-2"
-                }`}
-              ></span>
-              <span
-                className={`absolute h-[1px] w-6 bg-white transition-all duration-300 ${
-                  isMobileMenuOpen ? "opacity-0" : "opacity-100"
-                }`}
-              ></span>
-              <span
-                className={`absolute h-[1px] w-6 bg-white transform transition-all duration-300 ${
-                  isMobileMenuOpen ? "-rotate-45" : "translate-y-2"
-                }`}
-              ></span>
-            </div>
-          </button>
-        </div>
+            <FiDownload aria-hidden="true" />
+            Résumé
+          </a>
+        </nav>
 
-        {/* Mobile Navigation */}
-        <div
-          className={`md:hidden transition-all duration-500 ease-in-out ${
-            isMobileMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-          } overflow-hidden bg-black/95 backdrop-blur-md`}
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          className="-mr-2.5 flex h-11 w-11 items-center justify-center rounded-md lg:hidden"
+          aria-expanded={open}
+          aria-controls="mobile-nav"
+          aria-label={open ? "Close menu" : "Open menu"}
         >
-          <div className="px-4 py-6 space-y-4">
-            {navItems.map((item) => (
-              <NavLink
-                key={item.name}
-                to={item.to}
-                className={({ isActive }) =>
-                  `block uppercase font-medium tracking-wider text-sm px-4 py-3 rounded transition-colors duration-300
-                  ${
-                    isActive
-                      ? "text-white bg-white/10"
-                      : "text-gray-300 hover:text-white hover:bg-white/5"
-                  }`
-                }
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {item.name}
-              </NavLink>
-            ))}
-          </div>
-        </div>
+          {open ? <FiX size={22} /> : <FiMenu size={22} />}
+        </button>
       </div>
-    </nav>
+
+      <nav
+        id="mobile-nav"
+        aria-label="Main"
+        className={`lg:hidden ${open ? "block" : "hidden"} max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-rule bg-paper shadow-[0_12px_24px_-12px_rgb(13_27_42/0.18)]`}
+      >
+        <ul className="mx-auto max-w-[1120px] px-5 py-3 sm:px-8">
+          {navItems.map((item) => (
+            <li key={item.name}>
+              <Link to={item.to} className="block py-3 text-base font-medium">
+                {item.name}
+              </Link>
+            </li>
+          ))}
+          <li className="pt-3">
+            <a
+              href={profile.resumeUrl}
+              download
+              className="inline-flex min-h-11 items-center gap-2 rounded-md bg-ink px-4 text-[0.875rem] font-semibold text-paper"
+            >
+              <FiDownload aria-hidden="true" />
+              Download résumé
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
   );
 };
 

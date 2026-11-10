@@ -1,112 +1,102 @@
-import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import PropTypes from "prop-types";
+import { BrowserRouter, Routes, Route, Navigate, Link, useLocation } from "react-router-dom";
 import NavBar from "./pages/NavBar/NavBar";
 import Footer from "./components/Footer/Footer";
 import Home from "./pages/Home/Home";
-import About from "./pages/About/About";
 import Projects from "./pages/Projects/Projects";
 import ProjectDetail from "./pages/Projects/ProjectDetail";
 import Blog from "./pages/Blog/Blog";
 import FromLocalhostToProduction from "./pages/Blog/BlogDetail.jsx/from_localhost_to_production";
 import Salvation from "./pages/Blog/BlogDetail.jsx/Salivation";
+import How_TO_USE_GIT from "./pages/Blog/BlogDetail.jsx/How_TO_USE_GIT";
 import Gallery from "./pages/Gallery/Gallery";
 import Contact from "./pages/Contact Me/ContactMe";
-import How_TO_USE_GIT from "./pages/Blog/BlogDetail.jsx/How_TO_USE_GIT";
-const ComingSoon = () => (
-  <div className="min-h-screen flex flex-col items-center justify-center text-center bg-black text-white">
-    <h1 className="text-4xl font-bold mb-4">Coming Soon</h1>
-    <p className="text-lg text-gray-400">
-      This page is under construction. Please check back later!
-    </p>
-  </div>
+import { Container } from "./components/ui";
+
+// Scrolls to #anchors after navigation, or to the top on a new page.
+const ScrollManager = () => {
+  const { pathname, hash } = useLocation();
+  useEffect(() => {
+    if (hash) {
+      const el = document.getElementById(hash.slice(1));
+      if (el) {
+        el.scrollIntoView();
+        return;
+      }
+    }
+    window.scrollTo(0, 0);
+  }, [pathname, hash]);
+  return null;
+};
+
+const NotFound = () => (
+  <section className="pt-32 pb-24">
+    <Container>
+      <h1 className="text-[2rem] font-bold leading-tight tracking-[-0.02em] sm:text-[2.25rem]">Page not found</h1>
+      <p className="mt-4 max-w-[52ch] text-muted">
+        This address doesn&apos;t match any page on the site. Go back to the home page to find
+        projects, experience and contact details.
+      </p>
+      <Link to="/" className="mt-8 inline-block font-semibold text-signal link-underline">
+        Go to the home page
+      </Link>
+    </Container>
+  </section>
 );
 
-const App = () => {
-  const [theme, setTheme] = useState("dark");
+const Article = ({ children }) => <div className="legacy-article">{children}</div>;
 
-  useEffect(() => {
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [theme]);
+Article.propTypes = { children: PropTypes.node };
 
-  return (
-    <div
-      className={
-        theme === "dark"
-          ? "dark bg-gradient-to-br from-[#181a20] to-[#23272b] min-h-screen"
-          : "bg-white min-h-screen"
-      }
+const App = () => (
+  <BrowserRouter>
+    <ScrollManager />
+    <a
+      href="#main"
+      className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded focus:bg-ink focus:px-4 focus:py-2 focus:text-paper"
     >
-      <BrowserRouter>
-        <NavBar />
-        <main className="min-h-screen">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/projects/:projectId" element={<ProjectDetail />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route
-              path="/blog/from_localhost_to_production"
-              element={<FromLocalhostToProduction />}
-            />
-            <Route path="/blog/how_to_use_git" element={<How_TO_USE_GIT />} />
-            <Route path="/blog/salivation" element={<Salvation />} />
-            <Route path="/gallery" element={<Gallery />} />
-            <Route path="/contact-me" element={<Contact />} />
-            {/* Add more blog detail routes as needed */}
-
-            <Route path="*" element={<ComingSoon />} />
-          </Routes>
-        </main>
-        <Footer />
-        {/* Light/Dark Toggle Button */}
-        <button
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          className="fixed bottom-6 right-6 z-50 bg-white/80 dark:bg-black/80 border border-gray-300 dark:border-white/10 rounded-full p-3 shadow-lg hover:scale-110 transition-all"
-          aria-label="Toggle light/dark mode"
-        >
-          {theme === "dark" ? (
-            // Sun icon
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 text-yellow-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <circle cx="12" cy="12" r="5" fill="currentColor" />
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 1v2m0 18v2m11-11h-2M3 12H1m16.95 7.07l-1.41-1.41M6.34 6.34L4.93 4.93m12.02 0l-1.41 1.41M6.34 17.66l-1.41 1.41"
-              />
-            </svg>
-          ) : (
-            // Moon icon
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 text-blue-700"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"
-              />
-            </svg>
-          )}
-        </button>
-      </BrowserRouter>
-    </div>
-  );
-};
+      Skip to content
+    </a>
+    <NavBar />
+    <main id="main" className="min-h-screen">
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<Navigate to="/#experience" replace />} />
+        <Route path="/projects" element={<Projects />} />
+        <Route path="/projects/:projectId" element={<ProjectDetail />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route
+          path="/blog/from_localhost_to_production"
+          element={
+            <Article>
+              <FromLocalhostToProduction />
+            </Article>
+          }
+        />
+        <Route
+          path="/blog/how_to_use_git"
+          element={
+            <Article>
+              <How_TO_USE_GIT />
+            </Article>
+          }
+        />
+        <Route
+          path="/blog/salivation"
+          element={
+            <Article>
+              <Salvation />
+            </Article>
+          }
+        />
+        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/contact-me" element={<Contact />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </main>
+    <Footer />
+  </BrowserRouter>
+);
 
 export default App;

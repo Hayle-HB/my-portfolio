@@ -1,820 +1,314 @@
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import Haylemeskel1 from "../../assets/Images/Haylemesel_P1.jpg";
-import Haylemeskel2 from "../../assets/Images/Haylemeskel_Photo_1_Hardwares.jpg";
-import {
-  SiReact,
-  SiNodedotjs,
-  SiTypescript,
-  SiMongodb,
-  SiTailwindcss,
-  SiAmazonwebservices,
-  SiJavascript,
-  SiPython,
-  SiGit,
-  SiDocker,
-  SiPostgresql,
-  SiFirebase,
-  SiNextdotjs,
-  SiVuedotjs,
-  SiLaravel,
-  SiExpress,
-  SiRedux,
-  SiGraphql,
-  SiJest,
-  SiWebpack,
-} from "react-icons/si";
 import { Link } from "react-router-dom";
+import { FiCheck, FiDownload, FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
+import portrait from "../../assets/Images/Haylemesel_P1.jpg";
+import avatar from "../../assets/Images/avatar.jpg";
+import workshop from "../../assets/Images/Haylemeskel_Photo_1_Hardwares.jpg";
+import { profile, experience, skills, education, awards, aiWork, listText } from "../../data/profile";
+import { projects } from "../../data/projects";
+import { Container, RailSection, RichText, Tag, ButtonLink } from "../../components/ui";
+import { type } from "../../styles/type";
+import TaskAnatomy from "../../components/TaskAnatomy";
+import ProjectCard from "../../components/ProjectCard";
 
-const images = [Haylemeskel1, Haylemeskel2];
+const Hero = () => (
+  <section className="pt-24 pb-14 sm:pt-32 sm:pb-20">
+    <Container>
+      <div className="grid items-center gap-10 md:grid-cols-12 lg:gap-12">
+        <div className="md:col-span-7 lg:col-span-7">
+          {/* Phones: a small portrait above the name keeps a face on the first screen. */}
+          <img
+            src={avatar}
+            alt={`Portrait of ${profile.name}`}
+            width="240"
+            height="240"
+            className="hero-settle mb-5 h-14 w-14 rounded-full object-cover md:hidden"
+          />
 
-const Home = () => {
-  const [current, setCurrent] = useState(0);
+          <h1 className={type.hero}>
+            <span className="hero-line">
+              <span>{profile.name}</span>
+            </span>
+          </h1>
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % images.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
+          <div className="hero-settle">
+            <p className="mt-3 text-[1.0625rem] font-medium text-ink sm:text-[1.1875rem]">{profile.title}</p>
+            <p className={`mt-4 max-w-[58ch] ${type.lead}`}>{profile.intro}</p>
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const elements = document.querySelectorAll(".fade-in");
-      elements.forEach((element) => {
-        const elementTop = element.getBoundingClientRect().top;
-        const elementBottom = element.getBoundingClientRect().bottom;
-        const isVisible = elementTop < window.innerHeight && elementBottom >= 0;
-        if (isVisible) {
-          element.classList.add("visible");
-        }
-      });
-    };
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  return (
-    <div className="min-h-screen bg-black text-white">
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20">
-        <div className="max-w-[90%] mx-auto">
-          <div className="grid grid-cols-12 gap-8">
-            {/* Left Column - Text Content */}
-            <div className="col-span-12 lg:col-span-6 space-y-12">
-              <div className="space-y-6">
-                <div className="space-y-2">
-                  <span className="text-gray-400 tracking-widest text-sm">
-                    WELCOME TO MY WORLD
-                  </span>
-                  <h1 className="text-6xl md:text-7xl font-light tracking-tight">
-                    Hi, I&apos;m <span className="font-bold">Haylemeskel</span>
-                  </h1>
-                </div>
-                <h2 className="text-2xl text-gray-400 font-light tracking-wide">
-                  Full Stack Developer
-                </h2>
-                <p className="text-gray-400 leading-relaxed max-w-lg">
-                  Crafting digital experiences with precision and creativity.
-                  Transforming ideas into elegant solutions.
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-6">
-                <Link
-                  to="/projects"
-                  className="group relative px-8 py-4 border border-white/20 hover:border-white transition-all duration-300"
-                >
-                  <span className="relative z-10">View My Work</span>
-                  <span className="absolute inset-0 bg-white/5 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
-                </Link>
-                <Link
-                  to="/contact-me"
-                  className="px-8 py-4 bg-white text-black hover:bg-gray-200 transition-colors duration-300"
-                >
-                  Contact Me
-                </Link>
-                <Link
-                  to="/blog"
-                  className="group relative px-8 py-4 border border-white/20 hover:border-white transition-all duration-300"
-                >
-                  <span className="relative z-10">Read My Blog</span>
-                  <span className="absolute inset-0 bg-white/5 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
-                </Link>
-              </div>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <ButtonLink href={profile.resumeUrl} download>
+                <FiDownload aria-hidden="true" />
+                Download résumé
+              </ButtonLink>
+              <ButtonLink href={`mailto:${profile.email}`} variant="secondary">
+                <FiMail aria-hidden="true" />
+                Email me
+              </ButtonLink>
             </div>
-            {/* Right Column - Image Carousel */}
-            <div className="col-span-12 lg:col-span-6 flex items-center justify-center relative">
-              <div className="relative w-130 h-103 rounded-2xl overflow-hidden shadow-2xl border-2 border-white/10 bg-gray-900 flex items-center justify-center">
-                <AnimatePresence mode="wait">
-                  <motion.img
-                    key={current}
-                    src={images[current]}
-                    alt="Haylemeskel"
-                    initial={{ opacity: 0, scale: 0.97 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 1.03 }}
-                    transition={{ duration: 0.7 }}
-                    className="w-full h-full object-cover object-center rounded-2xl"
-                  />
-                </AnimatePresence>
-              </div>
-            </div>
-          </div>
-          {/* Bottom Decorative Line */}
-          <div className="mt-20 w-full h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-        </div>
-      </section>
 
-      {/* Services Section */}
-      <section className="py-20">
-        <div className="max-w-[90%] mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-light mb-4">What I Do</h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">
-              Specializing in creating robust and scalable web applications with
-              modern technologies
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Web Development",
-                description:
-                  "Building responsive and performant web applications using React, Node.js, and modern web technologies.",
-                icon: (
-                  <svg
-                    className="w-8 h-8"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
-                    />
-                  </svg>
-                ),
-              },
-              {
-                title: "UI/UX Design",
-                description:
-                  "Creating intuitive and engaging user interfaces with a focus on user experience and accessibility.",
-                icon: (
-                  <svg
-                    className="w-8 h-8"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
-                    />
-                  </svg>
-                ),
-              },
-              {
-                title: "Backend Development",
-                description:
-                  "Developing secure and scalable backend systems with Node.js, Express, and various databases.",
-                icon: (
-                  <svg
-                    className="w-8 h-8"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"
-                    />
-                  </svg>
-                ),
-              },
-            ].map((service, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="p-8 rounded-2xl border border-white/10 hover:border-white/20 transition-colors duration-300"
-              >
-                <div className="text-white mb-4">{service.icon}</div>
-                <h3 className="text-xl font-semibold mb-4">{service.title}</h3>
-                <p className="text-gray-400">{service.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-20 bg-white/5">
-        <div className="max-w-[90%] mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            {[
-              { number: "4+", label: "Years Experience" },
-              { number: "8+", label: "Projects Completed" },
-              { number: "30+", label: "Happy Clients" },
-              { number: "100%", label: "Client Satisfaction" },
-            ].map((stat, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="space-y-2"
-              >
-                <h3 className="text-4xl font-bold text-white">{stat.number}</h3>
-                <p className="text-gray-400">{stat.label}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Projects Preview */}
-      <section className="py-20">
-        <div className="max-w-[90%] mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-light mb-4">Featured Work</h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">
-              A glimpse into some of my recent projects that showcase my
-              expertise and creativity
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Kuriftu Resorts",
-                category: "Business Platform",
-                image:
-                  "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
-                description: "Luxury resort booking and management platform",
-                technologies: ["React", "Node.js", "MongoDB"],
-                link: "/projects",
-              },
-              {
-                title: "EcoFarmIQ",
-                category: "IoT Solution",
-                image:
-                  "https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=2032&q=80",
-                description: "Smart farming management with IoT integration",
-                technologies: ["React", "Python", "Machine Learning"],
-                link: "/projects",
-              },
-              {
-                title: "ProgHubs",
-                category: "Collaboration Tool",
-                image:
-                  "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2015&q=80",
-                description:
-                  "Team collaboration and project management platform",
-                technologies: ["React", "Node.js", "Real-time"],
-                link: "/projects",
-              },
-            ].map((project, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group"
-              >
-                <div className="bg-white/5 rounded-2xl border border-white/10 hover:border-white/20 transition-all duration-300 overflow-hidden">
-                  <div className="relative overflow-hidden">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <a
-                        href={project.link}
-                        className="px-6 py-3 bg-white text-black rounded-lg hover:bg-gray-200 transition-colors duration-300"
-                      >
-                        View Project
-                      </a>
-                    </div>
-                  </div>
-                  <div className="p-6 space-y-4">
-                    <div>
-                      <span className="text-gray-400 text-sm">
-                        {project.category}
-                      </span>
-                      <h3 className="text-xl font-semibold mb-2">
-                        {project.title}
-                      </h3>
-                      <p className="text-gray-400 text-sm leading-relaxed">
-                        {project.description}
-                      </p>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {project.technologies.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-2 py-1 bg-white/10 rounded text-xs border border-white/10"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+            <dl className="mt-8 max-w-lg border-b border-rule text-[0.875rem]">
+              {[
+                ["Based in", profile.location],
+                ["Experience", "5+ years in backend, distributed and AI systems"],
+                [
+                  "Now",
+                  <>
+                    LLM training and evaluation,{" "}
+                    <a href="#ai-work" className="link-underline">
+                      Terminal-Bench tasks
+                    </a>
+                  </>,
+                ],
+              ].map(([term, value]) => (
+                <div key={term} className="grid grid-cols-[6rem_1fr] gap-4 border-t border-rule py-2.5">
+                  <dt className="text-muted">{term}</dt>
+                  <dd>{value}</dd>
                 </div>
-              </motion.div>
-            ))}
+              ))}
+            </dl>
           </div>
         </div>
-      </section>
 
-      {/* Process Section */}
-      <section className="py-20 bg-white/5">
-        <div className="max-w-[90%] mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-light mb-4">How I Work</h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">
-              A systematic approach to delivering exceptional results and
-              exceeding expectations
-            </p>
-          </motion.div>
+        <figure className="hero-settle hidden md:col-span-5 md:block lg:col-span-4 lg:col-start-9">
+          <img
+            src={portrait}
+            alt={`Portrait of ${profile.name}`}
+            width="960"
+            height="1280"
+            className="aspect-[4/5] w-full rounded-lg object-cover object-[50%_30%]"
+            fetchPriority="high"
+          />
+        </figure>
+      </div>
+    </Container>
+  </section>
+);
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {[
-              {
-                step: "01",
-                title: "Discovery",
-                description:
-                  "Understanding your vision, requirements, and goals through collaborative discussions",
-                icon: (
-                  <svg
-                    className="w-8 h-8"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    />
-                  </svg>
-                ),
-              },
-              {
-                step: "02",
-                title: "Planning",
-                description:
-                  "Creating detailed project roadmap, architecture, and technical specifications",
-                icon: (
-                  <svg
-                    className="w-8 h-8"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-                    />
-                  </svg>
-                ),
-              },
-              {
-                step: "03",
-                title: "Development",
-                description:
-                  "Building your solution with clean code, best practices, and regular updates",
-                icon: (
-                  <svg
-                    className="w-8 h-8"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M13 10V3L4 14h7v7l9-11h-7z"
-                    />
-                  </svg>
-                ),
-              },
-              {
-                step: "04",
-                title: "Delivery",
-                description:
-                  "Thorough testing, deployment, and ongoing support for your success",
-                icon: (
-                  <svg
-                    className="w-8 h-8"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
-                    />
-                  </svg>
-                ),
-              },
-            ].map((process, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="text-center space-y-4"
-              >
-                <div className="relative">
-                  <div className="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 border border-white/10">
-                    <div className="text-white">{process.icon}</div>
-                  </div>
-                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-white text-black rounded-full flex items-center justify-center text-sm font-bold">
-                    {process.step}
-                  </div>
-                </div>
-                <h3 className="text-xl font-semibold">{process.title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">
-                  {process.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+const AiWork = () => (
+  <section id="ai-work" className="on-night bg-night py-16 text-night-text sm:py-20">
+    <Container>
+      <header className="max-w-2xl">
+        <h2 className={type.h2}>{aiWork.heading}</h2>
+        <p className="mt-3 text-[0.9375rem] text-night-muted sm:text-base">{aiWork.intro}</p>
+      </header>
 
-      {/* Testimonials Section */}
-      <section className="py-20">
-        <div className="max-w-[90%] mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-light mb-4">What Clients Say</h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">
-              Real feedback from clients who have experienced the quality of my
-              work
-            </p>
-          </motion.div>
+      <ul className="mt-10 grid gap-8 lg:grid-cols-3 lg:gap-6">
+        {aiWork.roles.map((role) => (
+          <li key={role.id} className="border-t border-night-line pt-5">
+            <h3 className={type.h3}>{role.title}</h3>
+            <p className="mt-2 max-w-[68ch] text-[0.9375rem] leading-relaxed text-night-muted">{role.body}</p>
+            <ul className="mt-4 flex flex-wrap gap-1.5" aria-label={`${role.title} work`}>
+              {role.tasks.map((t) => (
+                <li key={t}>
+                  <Tag tone="night">{t}</Tag>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                name: "Sarah Johnson",
-                role: "CEO, TechStart",
-                content:
-                  "Haylemeskel delivered an exceptional website that perfectly captured our brand vision. The attention to detail and user experience exceeded our expectations.",
-                rating: 5,
-              },
-              {
-                name: "Michael Chen",
-                role: "Founder, ResortChain",
-                content:
-                  "Working with Haylemeskel was a game-changer for our business. The booking platform he built increased our reservations by 40% in the first month.",
-                rating: 5,
-              },
-              {
-                name: "Emily Rodriguez",
-                role: "Marketing Director, EcoFarm",
-                content:
-                  "The IoT integration and analytics dashboard Haylemeskel created transformed how we manage our farming operations. Highly recommended!",
-                rating: 5,
-              },
-            ].map((testimonial, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white/5 p-8 rounded-2xl border border-white/10 hover:border-white/20 transition-colors duration-300"
-              >
-                <div className="flex items-center mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <span key={i} className="text-yellow-400 text-lg">
-                      ⭐
-                    </span>
-                  ))}
-                </div>
-                <p className="text-gray-300 leading-relaxed mb-6 italic">
-                  &quot;{testimonial.content}&quot;
-                </p>
-                <div>
-                  <h4 className="font-semibold text-white">
-                    {testimonial.name}
-                  </h4>
-                  <p className="text-gray-400 text-sm">{testimonial.role}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Technologies Section */}
-      <section className="py-20 bg-white/5">
-        <div className="w-full">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16 max-w-[90%] mx-auto"
-          >
-            <h2 className="text-4xl font-light mb-4">Technologies I Master</h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">
-              Cutting-edge tools and frameworks that power modern web
-              applications
-            </p>
-          </motion.div>
-
-          <div className="relative overflow-hidden">
-            <div className="flex animate-scroll">
-              {/* First set of technologies */}
-              <div className="flex gap-8 flex-shrink-0">
-                {[
-                  {
-                    name: "React",
-                    icon: <SiReact className="w-8 h-8" />,
-                    category: "Frontend",
-                  },
-                  {
-                    name: "Node.js",
-                    icon: <SiNodedotjs className="w-8 h-8" />,
-                    category: "Backend",
-                  },
-                  {
-                    name: "TypeScript",
-                    icon: <SiTypescript className="w-8 h-8" />,
-                    category: "Language",
-                  },
-                  {
-                    name: "JavaScript",
-                    icon: <SiJavascript className="w-8 h-8" />,
-                    category: "Language",
-                  },
-                  {
-                    name: "Python",
-                    icon: <SiPython className="w-8 h-8" />,
-                    category: "Language",
-                  },
-                  {
-                    name: "MongoDB",
-                    icon: <SiMongodb className="w-8 h-8" />,
-                    category: "Database",
-                  },
-                  {
-                    name: "PostgreSQL",
-                    icon: <SiPostgresql className="w-8 h-8" />,
-                    category: "Database",
-                  },
-                  {
-                    name: "Firebase",
-                    icon: <SiFirebase className="w-8 h-8" />,
-                    category: "Database",
-                  },
-                  {
-                    name: "Tailwind",
-                    icon: <SiTailwindcss className="w-8 h-8" />,
-                    category: "Styling",
-                  },
-                  {
-                    name: "Next.js",
-                    icon: <SiNextdotjs className="w-8 h-8" />,
-                    category: "Framework",
-                  },
-                  {
-                    name: "Vue.js",
-                    icon: <SiVuedotjs className="w-8 h-8" />,
-                    category: "Framework",
-                  },
-                  {
-                    name: "Laravel",
-                    icon: <SiLaravel className="w-8 h-8" />,
-                    category: "Framework",
-                  },
-                  {
-                    name: "Express",
-                    icon: <SiExpress className="w-8 h-8" />,
-                    category: "Backend",
-                  },
-                  {
-                    name: "Redux",
-                    icon: <SiRedux className="w-8 h-8" />,
-                    category: "State",
-                  },
-                  {
-                    name: "GraphQL",
-                    icon: <SiGraphql className="w-8 h-8" />,
-                    category: "API",
-                  },
-                  {
-                    name: "Jest",
-                    icon: <SiJest className="w-8 h-8" />,
-                    category: "Testing",
-                  },
-                  {
-                    name: "Webpack",
-                    icon: <SiWebpack className="w-8 h-8" />,
-                    category: "Build",
-                  },
-                  {
-                    name: "Git",
-                    icon: <SiGit className="w-8 h-8" />,
-                    category: "Version Control",
-                  },
-                  {
-                    name: "Docker",
-                    icon: <SiDocker className="w-8 h-8" />,
-                    category: "DevOps",
-                  },
-                  {
-                    name: "AWS",
-                    icon: <SiAmazonwebservices className="w-8 h-8" />,
-                    category: "Cloud",
-                  },
-                ].map((tech, index) => (
-                  <div
-                    key={index}
-                    className="text-center group flex-shrink-0 w-24"
-                  >
-                    <div className="w-20 h-20 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-white/10 group-hover:border-white/20 transition-colors duration-300">
-                      <div className="text-white">{tech.icon}</div>
-                    </div>
-                    <h4 className="font-semibold text-white mb-1">
-                      {tech.name}
-                    </h4>
-                    <p className="text-gray-400 text-xs">{tech.category}</p>
-                  </div>
-                ))}
-              </div>
-              {/* Duplicate set for seamless loop */}
-              <div className="flex gap-8 flex-shrink-0">
-                {[
-                  {
-                    name: "React",
-                    icon: <SiReact className="w-8 h-8" />,
-                    category: "Frontend",
-                  },
-                  {
-                    name: "Node.js",
-                    icon: <SiNodedotjs className="w-8 h-8" />,
-                    category: "Backend",
-                  },
-                  {
-                    name: "TypeScript",
-                    icon: <SiTypescript className="w-8 h-8" />,
-                    category: "Language",
-                  },
-                  {
-                    name: "JavaScript",
-                    icon: <SiJavascript className="w-8 h-8" />,
-                    category: "Language",
-                  },
-                  {
-                    name: "Python",
-                    icon: <SiPython className="w-8 h-8" />,
-                    category: "Language",
-                  },
-                  {
-                    name: "MongoDB",
-                    icon: <SiMongodb className="w-8 h-8" />,
-                    category: "Database",
-                  },
-                  {
-                    name: "PostgreSQL",
-                    icon: <SiPostgresql className="w-8 h-8" />,
-                    category: "Database",
-                  },
-                  {
-                    name: "Firebase",
-                    icon: <SiFirebase className="w-8 h-8" />,
-                    category: "Database",
-                  },
-                  {
-                    name: "Tailwind",
-                    icon: <SiTailwindcss className="w-8 h-8" />,
-                    category: "Styling",
-                  },
-                  {
-                    name: "Next.js",
-                    icon: <SiNextdotjs className="w-8 h-8" />,
-                    category: "Framework",
-                  },
-                  {
-                    name: "Vue.js",
-                    icon: <SiVuedotjs className="w-8 h-8" />,
-                    category: "Framework",
-                  },
-                  {
-                    name: "Laravel",
-                    icon: <SiLaravel className="w-8 h-8" />,
-                    category: "Framework",
-                  },
-                  {
-                    name: "Express",
-                    icon: <SiExpress className="w-8 h-8" />,
-                    category: "Backend",
-                  },
-                  {
-                    name: "Redux",
-                    icon: <SiRedux className="w-8 h-8" />,
-                    category: "State",
-                  },
-                  {
-                    name: "GraphQL",
-                    icon: <SiGraphql className="w-8 h-8" />,
-                    category: "API",
-                  },
-                  {
-                    name: "Jest",
-                    icon: <SiJest className="w-8 h-8" />,
-                    category: "Testing",
-                  },
-                  {
-                    name: "Webpack",
-                    icon: <SiWebpack className="w-8 h-8" />,
-                    category: "Build",
-                  },
-                  {
-                    name: "Git",
-                    icon: <SiGit className="w-8 h-8" />,
-                    category: "Version Control",
-                  },
-                  {
-                    name: "Docker",
-                    icon: <SiDocker className="w-8 h-8" />,
-                    category: "DevOps",
-                  },
-                  {
-                    name: "AWS",
-                    icon: <SiAmazonwebservices className="w-8 h-8" />,
-                    category: "Cloud",
-                  },
-                ].map((tech, index) => (
-                  <div
-                    key={`duplicate-${index}`}
-                    className="text-center group flex-shrink-0 w-24"
-                  >
-                    <div className="w-20 h-20 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-white/10 group-hover:border-white/20 transition-colors duration-300">
-                      <div className="text-white">{tech.icon}</div>
-                    </div>
-                    <h4 className="font-semibold text-white mb-1">
-                      {tech.name}
-                    </h4>
-                    <p className="text-gray-400 text-xs">{tech.category}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20">
-        <div className="max-w-[90%] mx-auto text-center">
-          <h2 className="text-4xl font-light mb-6">Let&apos;s Work Together</h2>
-          <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
-            Have a project in mind? I&apos;m always open to discussing new
-            projects, creative ideas, or opportunities to be part of your
-            vision.
+      <div className="mt-14 grid grid-cols-1 gap-8 border-t border-night-line pt-12 lg:grid-cols-12 lg:gap-12">
+        <div className="lg:col-span-4">
+          <h3 className="text-[1.25rem] font-bold leading-snug tracking-[-0.01em]">
+            What goes into a <span className="whitespace-nowrap">Terminal-Bench</span> task
+          </h3>
+          <p className="mt-2 max-w-[42ch] text-[0.9375rem] text-night-muted">
+            Every task has the same five parts. Select a file to see what it holds, using a
+            simplified example.
           </p>
-          <a
-            href="/contact-me"
-            className="inline-block px-8 py-4 bg-white text-black hover:bg-gray-200 transition-colors duration-300"
-          >
-            Get in Touch
-          </a>
+          <h4 className="mt-8 text-[0.9375rem] font-semibold">Before a task ships</h4>
+          <ul className="mt-3 space-y-2.5">
+            {aiWork.checklist.map((item) => (
+              <li key={item} className="flex gap-2.5 text-[0.875rem] text-night-muted">
+                <FiCheck aria-hidden="true" className="mt-1 shrink-0 text-night-signal" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
         </div>
-      </section>
-    </div>
+        <div className="min-w-0 lg:col-span-8">
+          <TaskAnatomy />
+        </div>
+      </div>
+    </Container>
+  </section>
+);
+
+const Experience = () => (
+  <RailSection
+    id="experience"
+    title="Experience"
+    lead="Five years building backend, distributed and cloud systems, most recently production AI services."
+  >
+    <ol>
+      {experience.map((job) => (
+        <li
+          key={job.company}
+          className="grid gap-3 border-t border-rule py-8 first:border-t-0 first:pt-0 sm:grid-cols-12 sm:gap-6"
+        >
+          <div className="text-[0.875rem] text-muted sm:col-span-3">
+            <p className="font-medium text-ink">
+              <time>{job.start}</time> to <time>{job.end}</time>
+            </p>
+            <p className="mt-0.5">{job.location}</p>
+          </div>
+          <div className="sm:col-span-9">
+            <h3 className={type.h3}>
+              {job.role}
+              <span className="font-normal text-muted">, {job.company}</span>
+            </h3>
+            <ul className="mt-3 space-y-2">
+              {job.points.map((p) => (
+                <li
+                  key={p}
+                  className="relative pl-4 text-[0.9375rem] leading-relaxed before:absolute before:left-0 before:top-[0.7em] before:h-1 before:w-1 before:rounded-full before:bg-muted/50"
+                >
+                  <RichText text={p} />
+                </li>
+              ))}
+            </ul>
+            <ul className="mt-4 flex flex-wrap gap-1.5" aria-label="Stack">
+              {job.stack.map((s) => (
+                <li key={s}>
+                  <Tag>{s}</Tag>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </RailSection>
+);
+
+const AllProjects = () => (
+  <section id="projects" className="bg-mist py-16 sm:py-20">
+    <Container>
+      <header className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h2 className={type.h2}>Projects</h2>
+          <p className={`mt-2 max-w-[52ch] ${type.small} text-muted`}>
+            Client and personal work, from booking platforms to IoT dashboards.
+          </p>
+        </div>
+        <Link
+          to="/projects"
+          className="inline-flex min-h-11 items-center text-[0.875rem] font-semibold text-signal link-underline"
+        >
+          Filter by type
+        </Link>
+      </header>
+      <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
+        {projects.map((p) => (
+          <li key={p.id}>
+            <ProjectCard project={p} />
+          </li>
+        ))}
+      </ul>
+    </Container>
+  </section>
+);
+
+const Skills = () => (
+  <RailSection id="skills" title="Skills" lead="What I use day to day, grouped the way it shows up in my work.">
+    <dl>
+      {skills.map((s) => (
+        <div
+          key={s.group}
+          className="grid gap-1 border-t border-rule py-4 first:border-t-0 first:pt-0 sm:grid-cols-12 sm:gap-6"
+        >
+          <dt className="text-[0.9375rem] font-semibold sm:col-span-4">{s.group}</dt>
+          <dd className="text-[0.9375rem] text-muted sm:col-span-8">{listText(s.items)}</dd>
+        </div>
+      ))}
+    </dl>
+  </RailSection>
+);
+
+const Recognition = () => {
+  const award = awards[0];
+  return (
+    <RailSection id="education" title="Recognition and education" className="bg-mist">
+      <article className="grid gap-6 sm:grid-cols-12">
+        <figure className="sm:col-span-5">
+          <img
+            src={workshop}
+            alt="Haylemeskel at a workbench with a breadboard, sensors and wiring"
+            width="1280"
+            height="960"
+            loading="lazy"
+            className="aspect-[4/3] w-full rounded-lg object-cover"
+          />
+          <figcaption className="mt-2 text-[0.8125rem] text-muted">
+            Prototyping IoT sensors at the Cassiopia Innovation and Skill Development Club, AASTU.
+          </figcaption>
+        </figure>
+        <div className="sm:col-span-7">
+          <p className="text-[0.8125rem] text-muted">
+            <time>{award.date}</time>, {award.location}
+          </p>
+          <h3 className={`mt-1 ${type.h3}`}>{award.title}</h3>
+          <p className="mt-0.5 text-[0.9375rem] font-medium">
+            {award.prize}, {award.org}
+          </p>
+          <p className="mt-3 text-[0.9375rem] leading-relaxed">
+            <RichText text={award.description} />
+          </p>
+        </div>
+      </article>
+
+      <article className="mt-10 border-t border-rule pt-8">
+        <h3 className={type.h3}>{education.degree}</h3>
+        <p className="mt-0.5 text-[0.9375rem] text-muted">
+          {education.school}, {education.location}
+        </p>
+        <p className="mt-4 text-[0.875rem] font-semibold">Core coursework</p>
+        <p className="mt-1 max-w-[62ch] text-[0.9375rem] text-muted">{listText(education.coursework)}</p>
+      </article>
+    </RailSection>
   );
 };
+
+const ContactCta = () => (
+  <section className="py-16 sm:py-20">
+    <Container>
+      <div className="max-w-2xl">
+        <h2 className={type.h2}>Get in touch</h2>
+        <p className={`mt-3 ${type.lead}`}>{profile.availability}</p>
+        <a
+          href={`mailto:${profile.email}`}
+          className="mt-5 inline-block break-all py-2 text-[1.125rem] font-semibold text-signal link-underline sm:text-[1.25rem]"
+        >
+          {profile.email}
+        </a>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <ButtonLink as={Link} to="/contact-me">
+            Send a message
+          </ButtonLink>
+          <ButtonLink href={profile.links.github} variant="secondary" external>
+            <FiGithub aria-hidden="true" />
+            GitHub
+          </ButtonLink>
+          <ButtonLink href={profile.links.linkedin} variant="secondary" external>
+            <FiLinkedin aria-hidden="true" />
+            LinkedIn
+          </ButtonLink>
+        </div>
+      </div>
+    </Container>
+  </section>
+);
+
+const Home = () => (
+  <>
+    <Hero />
+    <AiWork />
+    <Experience />
+    <AllProjects />
+    <Skills />
+    <Recognition />
+    <ContactCta />
+  </>
+);
 
 export default Home;
