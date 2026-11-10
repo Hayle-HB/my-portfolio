@@ -41,7 +41,7 @@
     background: var(--color-paper);
     color: var(--color-ink);
     font-family: var(--font-sans);
-    font-size: 1.0625rem;
+    font-size: 1rem;
     line-height: 1.6;
     font-feature-settings: "kern", "liga";
     -webkit-font-smoothing: antialiased;
@@ -76,7 +76,7 @@
 
   /* Anchored sections clear the sticky header. */
   [id] {
-    scroll-margin-top: 6rem;
+    scroll-margin-top: 5rem;
   }
 }
 
@@ -85,12 +85,12 @@
   .metric {
     background: linear-gradient(
       to top,
-      var(--color-mark) 0 48%,
-      transparent 48%
+      color-mix(in srgb, var(--color-mark) 70%, transparent) 0 38%,
+      transparent 38%
     );
     color: inherit;
     font-weight: 600;
-    padding: 0 0.12em;
+    padding: 0 0.08em;
     margin: 0 -0.04em;
     box-decoration-break: clone;
     -webkit-box-decoration-break: clone;

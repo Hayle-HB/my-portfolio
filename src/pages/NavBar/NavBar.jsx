@@ -40,8 +40,8 @@ const NavBar = () => {
           : "border-b border-transparent bg-paper/0"
       }`}
     >
-      <div className="mx-auto flex h-[4.5rem] w-full max-w-[1180px] items-center justify-between px-5 sm:px-8">
-        <Link to="/" className="wide whitespace-nowrap py-2.5 text-[1.0625rem] font-bold tracking-[-0.01em]" aria-label="Home">
+      <div className="mx-auto flex h-16 w-full max-w-[1120px] items-center justify-between px-5 sm:px-8">
+        <Link to="/" className="whitespace-nowrap py-2.5 text-[0.9375rem] font-bold" aria-label="Home">
           {profile.firstName} <span className="font-normal">{profile.lastName}</span>
         </Link>
 
@@ -54,7 +54,7 @@ const NavBar = () => {
                   <Link
                     to={item.to}
                     aria-current={active ? "page" : undefined}
-                    className={`tap whitespace-nowrap text-[0.9375rem] transition-colors ${
+                    className={`tap whitespace-nowrap text-[0.875rem] transition-colors ${
                       active ? "font-semibold text-ink" : "text-muted hover:text-ink"
                     }`}
                   >
@@ -67,7 +67,7 @@ const NavBar = () => {
           <a
             href={profile.resumeUrl}
             download
-            className="inline-flex min-h-11 items-center gap-2 rounded-md bg-ink px-4 text-[0.875rem] font-semibold text-paper transition-colors hover:bg-signal-dark"
+            className="inline-flex min-h-11 items-center gap-2 rounded-md bg-ink px-3.5 text-[0.8125rem] font-semibold text-paper transition-colors hover:bg-signal-dark"
           >
             <FiDownload aria-hidden="true" />
             Résumé
@@ -89,12 +89,12 @@ const NavBar = () => {
       <nav
         id="mobile-nav"
         aria-label="Main"
-        className={`lg:hidden ${open ? "block" : "hidden"} max-h-[calc(100dvh-4.5rem)] overflow-y-auto border-t border-rule bg-paper shadow-[0_12px_24px_-12px_rgb(13_27_42/0.18)]`}
+        className={`lg:hidden ${open ? "block" : "hidden"} max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-rule bg-paper shadow-[0_12px_24px_-12px_rgb(13_27_42/0.18)]`}
       >
-        <ul className="mx-auto max-w-[1180px] px-5 py-4 sm:px-8">
+        <ul className="mx-auto max-w-[1120px] px-5 py-3 sm:px-8">
           {navItems.map((item) => (
             <li key={item.name}>
-              <Link to={item.to} className="block py-3 text-[1.0625rem] font-medium">
+              <Link to={item.to} className="block py-3 text-base font-medium">
                 {item.name}
               </Link>
             </li>
@@ -103,7 +103,7 @@ const NavBar = () => {
             <a
               href={profile.resumeUrl}
               download
-              className="inline-flex items-center gap-2 rounded-md bg-ink px-4 py-3 text-[0.9375rem] font-semibold text-paper"
+              className="inline-flex min-h-11 items-center gap-2 rounded-md bg-ink px-4 text-[0.875rem] font-semibold text-paper"
             >
               <FiDownload aria-hidden="true" />
               Download résumé

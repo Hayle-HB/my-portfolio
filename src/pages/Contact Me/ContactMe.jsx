@@ -24,11 +24,11 @@ const validationSchema = Yup.object({
 });
 
 const inputClass =
-  "w-full rounded-md border border-rule bg-white px-4 py-3 text-ink placeholder:text-muted/60 transition-colors focus:border-ink focus:outline-none aria-[invalid=true]:border-red-600";
+  "w-full rounded-md border border-rule bg-white px-3.5 py-2.5 text-[0.9375rem] text-ink placeholder:text-muted/60 transition-colors focus:border-ink focus:outline-none aria-[invalid=true]:border-red-600";
 
 const FieldBlock = ({ name, label, as, type = "text", rows, placeholder, errors, touched }) => (
   <div>
-    <label htmlFor={name} className="mb-2 block text-[0.9375rem] font-medium">
+    <label htmlFor={name} className="mb-1.5 block text-[0.875rem] font-medium">
       {label}
     </label>
     <Field
@@ -81,16 +81,16 @@ const ContactMe = () => {
   };
 
   return (
-    <div className="pt-28 pb-24 sm:pt-36">
+    <div className="pt-24 pb-20 sm:pt-32">
       <Container>
-        <div className="grid gap-14 lg:grid-cols-12">
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
           <header className="lg:col-span-5">
-            <h1 className="wide text-[2.625rem] font-bold leading-[1.05] tracking-[-0.02em] sm:text-[3.5rem]">
+            <h1 className="text-[2rem] font-bold leading-tight tracking-[-0.02em] sm:text-[2.25rem]">
               Contact
             </h1>
-            <p className="mt-5 max-w-[44ch] text-[1.125rem] text-muted">{profile.availability}</p>
+            <p className="mt-3 max-w-[44ch] text-base text-muted">{profile.availability}</p>
 
-            <dl className="mt-10 border-t border-rule text-[0.9375rem]">
+            <dl className="mt-8 border-t border-rule text-[0.875rem]">
               {[
                 [
                   "Email",
@@ -100,14 +100,14 @@ const ContactMe = () => {
                 ],
                 ["Location", profile.location],
               ].map(([k, v]) => (
-                <div key={k} className="grid grid-cols-[6.5rem_1fr] gap-4 border-b border-rule py-3">
+                <div key={k} className="grid grid-cols-[6rem_1fr] gap-4 border-b border-rule py-2.5">
                   <dt className="text-muted">{k}</dt>
                   <dd>{v}</dd>
                 </div>
               ))}
             </dl>
 
-            <div className="mt-6 flex flex-wrap gap-x-6 text-[0.9375rem] font-semibold">
+            <div className="mt-4 flex flex-wrap gap-x-6 text-[0.875rem] font-semibold">
               <a href={profile.resumeUrl} download className="inline-flex min-h-11 items-center gap-2 link-underline">
                 <FiDownload aria-hidden="true" /> Download résumé
               </a>
@@ -127,9 +127,9 @@ const ContactMe = () => {
               onSubmit={handleSubmit}
             >
               {({ isSubmitting, errors, touched }) => (
-                <Form ref={formRef} noValidate className="space-y-6 rounded-xl border border-rule bg-white p-6 sm:p-8">
-                  <h2 className="text-[1.3125rem] font-semibold">Send a message</h2>
-                  <div className="grid gap-6 sm:grid-cols-2">
+                <Form ref={formRef} noValidate className="space-y-5 rounded-lg border border-rule bg-white p-5 sm:p-7">
+                  <h2 className="text-[1.125rem] font-semibold">Send a message</h2>
+                  <div className="grid gap-5 sm:grid-cols-2">
                     <FieldBlock name="name" label="Name" errors={errors} touched={touched} />
                     <FieldBlock name="email" label="Email" type="email" errors={errors} touched={touched} />
                   </div>
@@ -140,7 +140,7 @@ const ContactMe = () => {
                     errors={errors}
                     touched={touched}
                   />
-                  <FieldBlock name="message" label="Message" as="textarea" rows={7} errors={errors} touched={touched} />
+                  <FieldBlock name="message" label="Message" as="textarea" rows={6} errors={errors} touched={touched} />
 
                   <div aria-live="polite">
                     {status === "sent" && (
@@ -161,7 +161,7 @@ const ContactMe = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full rounded-md bg-ink px-6 py-3.5 font-semibold text-paper transition-colors hover:bg-signal-dark disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+                    className="min-h-11 w-full rounded-md bg-ink px-5 text-[0.875rem] font-semibold text-paper transition-colors hover:bg-signal-dark disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
                   >
                     {isSubmitting ? "Sending message…" : "Send message"}
                   </button>

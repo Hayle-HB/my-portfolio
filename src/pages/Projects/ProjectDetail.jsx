@@ -9,9 +9,9 @@ const ProjectDetail = () => {
 
   if (!project) {
     return (
-      <div className="pt-40 pb-32">
+      <div className="pt-32 pb-24">
         <Container>
-          <h1 className="wide text-[2.625rem] font-bold tracking-[-0.015em]">Project not found</h1>
+          <h1 className="text-[2rem] font-bold leading-tight tracking-[-0.02em] sm:text-[2.25rem]">Project not found</h1>
           <p className="mt-4 max-w-[52ch] text-muted">
             There&apos;s no project at this address. The full list is on the projects page.
           </p>
@@ -27,7 +27,7 @@ const ProjectDetail = () => {
   const next = projects[(index + 1) % projects.length];
 
   return (
-    <article className="pt-28 pb-24 sm:pt-36">
+    <article className="pt-24 pb-20 sm:pt-32">
       <Container>
         <Link
           to="/projects"
@@ -37,13 +37,13 @@ const ProjectDetail = () => {
           All projects
         </Link>
 
-        <header className="mt-8 grid gap-10 lg:grid-cols-12">
+        <header className="mt-6 grid gap-8 lg:grid-cols-12">
           <div className="lg:col-span-8">
-            <h1 className="wide text-[2.625rem] font-bold leading-[1.05] tracking-[-0.02em] sm:text-[3.5rem]">
+            <h1 className="text-[2rem] font-bold leading-tight tracking-[-0.02em] sm:text-[2.25rem]">
               {project.title}
             </h1>
-            <p className="mt-5 max-w-[60ch] text-[1.125rem] text-muted">{project.longDescription}</p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <p className="mt-3 max-w-[62ch] text-base leading-relaxed text-muted">{project.longDescription}</p>
+            <div className="mt-6 flex flex-wrap gap-3">
               {project.liveUrl && (
                 <ButtonLink href={project.liveUrl} external>
                   Visit site
@@ -58,13 +58,13 @@ const ProjectDetail = () => {
               )}
             </div>
           </div>
-          <dl className="self-start border-t border-rule text-[0.9375rem] lg:col-span-4">
+          <dl className="self-start border-t border-rule text-[0.875rem] lg:col-span-4">
             {[
               ["Role", project.role],
               ["Duration", project.duration],
               ["Type", project.categoryLabel],
             ].map(([k, v]) => (
-              <div key={k} className="grid grid-cols-[6rem_1fr] gap-4 border-b border-rule py-3">
+              <div key={k} className="grid grid-cols-[6rem_1fr] gap-4 border-b border-rule py-2.5">
                 <dt className="text-muted">{k}</dt>
                 <dd>{v}</dd>
               </div>
@@ -72,10 +72,10 @@ const ProjectDetail = () => {
           </dl>
         </header>
 
-        <div className="mt-20 grid gap-16 lg:grid-cols-12">
+        <div className="mt-14 grid gap-10 lg:grid-cols-12">
           <section className="lg:col-span-4">
-            <h2 className="text-[1.3125rem] font-semibold">What it does</h2>
-            <ul className="mt-4 space-y-2 text-muted">
+            <h2 className="text-[1.125rem] font-semibold">What it does</h2>
+            <ul className="mt-3 space-y-1.5 text-[0.9375rem] text-muted">
               {project.features.map((f) => (
                 <li key={f}>{f}</li>
               ))}
@@ -83,20 +83,20 @@ const ProjectDetail = () => {
           </section>
 
           <section className="lg:col-span-8">
-            <h2 className="text-[1.3125rem] font-semibold">Problems and how I solved them</h2>
+            <h2 className="text-[1.125rem] font-semibold">Problems and how I solved them</h2>
             <ul className="mt-4 border-b border-rule">
               {project.challenges.map((c, i) => (
-                <li key={c} className="grid gap-1 border-t border-rule py-4 sm:grid-cols-2 sm:gap-8">
-                  <p className="font-medium">{c}</p>
-                  <p className="text-muted">{project.solutions[i]}</p>
+                <li key={c} className="grid gap-1 border-t border-rule py-3 sm:grid-cols-2 sm:gap-8">
+                  <p className="text-[0.9375rem] font-medium">{c}</p>
+                  <p className="text-[0.9375rem] text-muted">{project.solutions[i]}</p>
                 </li>
               ))}
             </ul>
           </section>
         </div>
 
-        <section className="mt-16">
-          <h2 className="text-[1.3125rem] font-semibold">Built with</h2>
+        <section className="mt-12">
+          <h2 className="text-[1.125rem] font-semibold">Built with</h2>
           <ul className="mt-4 flex flex-wrap gap-2">
             {project.technologies.map((t) => (
               <li key={t}>
@@ -106,11 +106,11 @@ const ProjectDetail = () => {
           </ul>
         </section>
 
-        <nav aria-label="Next project" className="mt-24 border-t border-rule pt-8">
+        <nav aria-label="Next project" className="mt-16 border-t border-rule pt-6">
           <p className="text-[0.9375rem] text-muted">Next project</p>
           <Link
             to={`/projects/${next.id}`}
-            className="tap wide mt-1 inline-block text-[1.625rem] font-bold tracking-[-0.01em] link-underline sm:text-[2.0625rem]"
+            className="tap mt-1 inline-block text-[1.25rem] font-bold tracking-[-0.01em] link-underline"
           >
             {next.title}
           </Link>

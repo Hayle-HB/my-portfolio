@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
+import { type } from "../styles/type";
 
 export const Container = ({ className = "", children }) => (
-  <div className={`mx-auto w-full max-w-[1180px] px-5 sm:px-8 ${className}`}>{children}</div>
+  <div className={`mx-auto w-full max-w-[1120px] px-5 sm:px-8 ${className}`}>{children}</div>
 );
 
 Container.propTypes = { className: PropTypes.string, children: PropTypes.node };
@@ -28,15 +29,13 @@ RichText.propTypes = { text: PropTypes.string.isRequired };
  * Two-column section: heading in the left rail, content on the right.
  */
 export const RailSection = ({ id, title, lead, className = "", children, aside }) => (
-  <section id={id} className={`py-20 sm:py-28 ${className}`}>
+  <section id={id} className={`py-16 sm:py-20 ${className}`}>
     <Container>
-      <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
+      <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
         <header className="lg:col-span-4">
-          <div className="lg:sticky lg:top-28">
-            <h2 className="wide text-[2.0625rem] font-bold leading-[1.1] tracking-[-0.015em] sm:text-[2.625rem]">
-              {title}
-            </h2>
-            {lead && <p className="mt-4 max-w-[34ch] text-muted">{lead}</p>}
+          <div className="lg:sticky lg:top-24">
+            <h2 className={type.h2}>{title}</h2>
+            {lead && <p className={`mt-3 max-w-[36ch] ${type.small} text-muted`}>{lead}</p>}
             {aside}
           </div>
         </header>
@@ -57,7 +56,7 @@ RailSection.propTypes = {
 
 export const Tag = ({ children, tone = "light" }) => (
   <span
-    className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-[0.8125rem] leading-6 ${
+    className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-[0.8125rem] leading-5 ${
       tone === "night"
         ? "border-night-line text-night-muted"
         : "border-rule bg-white text-muted"
@@ -74,7 +73,7 @@ export const ButtonLink = ({ href, to, variant = "primary", children, external, 
     variant === "primary"
       ? "bg-ink text-paper hover:bg-signal-dark"
       : "border border-ink/25 text-ink hover:border-ink hover:bg-white";
-  const className = `inline-flex items-center gap-2 rounded-md px-5 py-3 text-[0.9375rem] font-semibold transition-colors ${styles}`;
+  const className = `inline-flex min-h-11 items-center gap-2 rounded-md px-4 text-[0.875rem] font-semibold transition-colors ${styles}`;
   if (As && to) {
     return (
       <As to={to} className={className}>

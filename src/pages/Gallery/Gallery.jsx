@@ -44,20 +44,20 @@ const Gallery = () => {
   }, [selected]);
 
   return (
-    <div className="pt-28 pb-24 sm:pt-36">
+    <div className="pt-24 pb-20 sm:pt-32">
       <Container>
         <header className="max-w-3xl">
-          <h1 className="wide text-[2.625rem] font-bold leading-[1.05] tracking-[-0.02em] sm:text-[3.5rem]">
+          <h1 className="text-[2rem] font-bold leading-tight tracking-[-0.02em] sm:text-[2.25rem]">
             Gallery
           </h1>
-          <p className="mt-5 max-w-[52ch] text-[1.125rem] text-muted">
+          <p className="mt-3 max-w-[52ch] text-base text-muted">
             Conferences, startup events and campus. Select a photo to see it full size.
           </p>
         </header>
 
-        <ul className="mt-12 columns-1 gap-5 sm:columns-2 lg:columns-3">
+        <ul className="mt-8 columns-1 gap-4 sm:columns-2 lg:columns-3">
           {photos.map((p, i) => (
-            <li key={p.src} className="mb-5 break-inside-avoid">
+            <li key={p.src} className="mb-4 break-inside-avoid">
               <button
                 type="button"
                 onClick={(e) => {

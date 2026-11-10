@@ -115,30 +115,30 @@ const Blog = () => {
   const posts = [...blogPosts].sort((a, b) => new Date(b.date) - new Date(a.date));
 
   return (
-    <div className="pt-28 pb-24 sm:pt-36">
+    <div className="pt-24 pb-20 sm:pt-32">
       <Container>
         <header className="max-w-3xl">
-          <h1 className="wide text-[2.625rem] font-bold leading-[1.05] tracking-[-0.02em] sm:text-[3.5rem]">
+          <h1 className="text-[2rem] font-bold leading-tight tracking-[-0.02em] sm:text-[2.25rem]">
             Writing
           </h1>
-          <p className="mt-5 max-w-[52ch] text-[1.125rem] text-muted">
+          <p className="mt-3 max-w-[52ch] text-base text-muted">
             Practical guides from my engineering work, written for the teams I work with.
           </p>
         </header>
 
-        <ol className="mt-14 max-w-3xl border-b border-rule">
+        <ol className="mt-10 max-w-3xl border-b border-rule">
           {posts.map((post) => (
-            <li key={post.slug} className="border-t border-rule py-8">
-              <p className="text-[0.9375rem] text-muted">
+            <li key={post.slug} className="border-t border-rule py-6">
+              <p className="text-[0.8125rem] text-muted">
                 <time dateTime={post.date}>{formatDate(post.date)}</time>
               </p>
-              <h2 className="mt-2 text-[1.625rem] font-semibold leading-tight tracking-[-0.01em]">
+              <h2 className="mt-1.5 text-[1.125rem] font-semibold leading-snug">
                 <Link to={`/blog/${post.slug.toLowerCase()}`} className="tap link-underline">
                   {post.title}
                 </Link>
               </h2>
-              <p className="mt-3 max-w-[62ch] text-muted">{post.summary}</p>
-              <p className="mt-4 text-[0.9375rem]">
+              <p className="mt-2 max-w-[62ch] text-[0.9375rem] leading-relaxed text-muted">{post.summary}</p>
+              <p className="mt-3 text-[0.8125rem] text-muted">
                 <span className="sr-only">Topics: </span>
                 {post.tags.join(", ")}
               </p>

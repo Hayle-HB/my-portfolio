@@ -31,9 +31,9 @@ const ScrollManager = () => {
 };
 
 const NotFound = () => (
-  <section className="pt-40 pb-32">
+  <section className="pt-32 pb-24">
     <Container>
-      <h1 className="wide text-[2.625rem] font-bold tracking-[-0.015em]">Page not found</h1>
+      <h1 className="text-[2rem] font-bold leading-tight tracking-[-0.02em] sm:text-[2.25rem]">Page not found</h1>
       <p className="mt-4 max-w-[52ch] text-muted">
         This address doesn&apos;t match any page on the site. Go back to the home page to find
         projects, experience and contact details.
